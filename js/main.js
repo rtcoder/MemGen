@@ -4,7 +4,13 @@ String.prototype.lines = function () {
 String.prototype.lineCount = function () {
     return this.lines().length;
 }
-
+var keys = {
+    Ctrl: false, //press Control (Ctrl)
+    delete: false, //press delete
+    O: false,
+    I: false,
+    S: false
+}
 var canvas,
         ctx,
         MemGen = {
@@ -13,16 +19,17 @@ var canvas,
             fontSize: 20,
             fontStyle: "Tahoma",
             isStroke: true,
-            image: null,
+            image: new Image(),
             strokeWidth: 5,
+            fitToFrame: false,
             init: function () {
-                MemGen.initEvents();
                 canvas = document.getElementById("myCanvas");
                 ctx = canvas.getContext("2d");
                 MemGen.initEvents();
             },
+            resize: function () {
+            },
             drawText: function () {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.strokeStyle = MemGen.strokeColor;
                 ctx.fillStyle = MemGen.color;
                 ctx.font = MemGen.fontSize + "px " + MemGen.fontStyle;
@@ -32,7 +39,6 @@ var canvas,
                 MemGen.putBottomText($('textarea#bottom-text').val());
             },
             putTopText: function (text) {
-
                 var lines = text.lines();
                 var lineCount = text.lineCount();
                 var maxWidth = canvas.width - 50;
@@ -45,20 +51,37 @@ var canvas,
                     }
                     ctx.fillText(lines[i], canvas.width / 2, (i + 1) * y);
                 }
-
             },
             putBottomText: function (text) {
-                if (MemGen.isStroke) {
-                    MemGen.drawStroked(text, canvas.width / 2, canvas.height - 50);
+                var lines = text.lines();
+                var lineCount = text.lineCount();
+                var maxWidth = canvas.width - 50;
+                var lineHeight = MemGen.fontSize;
+                var y = MemGen.fontSize + 10;
+                for (var i = 0; i < lineCount; i++) {
+
+                    if (MemGen.isStroke) {
+                        MemGen.drawStroked(lines[i], canvas.width / 2, canvas.height - ((lineCount - (i)) * y));
+                    }
+                    ctx.fillText(lines[i], canvas.width / 2, canvas.height - ((lineCount - (i)) * y));
                 }
-                ctx.fillText(text, canvas.width / 2, canvas.height - 50);
             },
             drawStroked: function (text, x, y) {
                 ctx.lineWidth = MemGen.strokeWidth;
                 ctx.strokeText(text, x, y);
             },
-            drawImage: function(){
-                ctx.drawImage(MemGen.image, 0, 0, canvas.width, canvas.height);
+            drawAll: function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                MemGen.drawImage();
+                MemGen.drawText();
+
+            },
+            drawImage: function () {
+                if (MemGen.fitToFrame) {
+                    ctx.drawImage(MemGen.image, 0, 0, canvas.width, canvas.height);
+                } else {
+                    ctx.drawImage(MemGen.image, 0, 0);
+                }
             },
             upload: function (event) {
                 var input = event.target;
@@ -72,76 +95,169 @@ var canvas,
                     widthImg = this.width;
                     heightImg = this.height;
 
-                    MemGen.drawImage();
+                    MemGen.drawAll();
                 }
             },
             download: function () {
-                $(webDraft.draw.selectorId).append('<canvas id="tmpCanvas" width="' + webDraft.draw.width + '" height="' + webDraft.draw.height + '"></canvas>');
-
-                var temp_c = document.getElementById("tmpCanvas");
-                var temp_ctx = temp_c.getContext("2d");
-
-                for (var i = 0; i <= layers.list.id.length; i++) {
-                    if (typeof layers.list.id[i] === "string" && layers.list.visible[i] === true) {
-                        var imgData = document.getElementById(layers.list.id[i]);
-                        var top = parseInt($("#" + layers.list.id[i]).css("top"));
-                        var left = parseInt($("#" + layers.list.id[i]).css("left"));
-                        temp_ctx.drawImage(imgData, top, left);
-                    }
-                }
-
-                $("#tmpCanvas").width(webDraft.draw.width).height(webDraft.draw.height)
-                temp_c.toBlob(function (blob) {
-                    saveAs(blob, "plik.png");
+                canvas.toBlob(function (blob) {
+                    saveAs(blob, "meme.png");
                 });
 
-                $("#tmpCanvas").remove();
+            },
+            exportLink:function(){
+                var src = canvas.toDataURL();
+                window.open(src,'_blank');
             },
             initEvents: function () {
                 $('textarea').keyup(function () {
-                    MemGen.drawText();
+                    MemGen.drawAll();
                 });
 
                 $('input#stroke').change(function () {
                     MemGen.isStroke = $(this).is(":checked");
-                    MemGen.drawText();
+                    MemGen.drawAll();
+                });
+                $('input#fitToFrame').change(function () {
+                    MemGen.fitToFrame = $(this).is(":checked");
+                    MemGen.drawAll();
                 });
 
                 $('input#color').change(function () {
                     MemGen.color = $(this).val();
-                    MemGen.drawText();
+                    MemGen.drawAll();
                 });
 
                 $('input#strokeColor').change(function () {
                     MemGen.strokeColor = $(this).val();
-                    MemGen.drawText();
+                    MemGen.drawAll();
                 });
 
                 $('input#lineWidth').change(function () {
                     MemGen.strokeWidth = parseInt($(this).val());
-                    MemGen.drawText();
+                    MemGen.drawAll();
                 }).mousemove(function () {
                     MemGen.strokeWidth = parseInt($(this).val());
-                    MemGen.drawText();
-                }).val(MemGen.strokeWidth);
+                    MemGen.drawAll();
+                }).val(MemGen.strokeWidth)
+                        .parent().find('label').find('span.val').text(MemGen.strokeWidth);
 
                 $('input#fontSize').change(function () {
                     MemGen.fontSize = parseInt($(this).val());
-                    MemGen.drawText();
+                    MemGen.drawAll();
                 }).mousemove(function () {
                     MemGen.fontSize = parseInt($(this).val());
-                    MemGen.drawText();
-                }).val(MemGen.fontSize);
+                    MemGen.drawAll();
+                }).val(MemGen.fontSize)
+                        .parent().find('label').find('span.val').text(MemGen.fontSize);
+                
+                
+                $('input#frameX').change(function () {
+                    $('canvas').attr('width', parseInt($(this).val()))
+                    MemGen.drawAll();
+                }).mousemove(function () {
+                    $('canvas').attr('width', parseInt($(this).val()))
+                    MemGen.drawAll();
+                });
 
+                $('input#frameY').change(function () {
+                    $('canvas').attr('height', parseInt($(this).val()))
+                    MemGen.drawAll();
+                }).mousemove(function () {
+                    $('canvas').attr('height', parseInt($(this).val()))
+                    MemGen.drawAll();
+                });
+
+                $('input[type=range]').change(function () {
+                    $(this).parent().find('label').find('span.val').text($(this).val());
+
+                    if ($(this).attr('id') === 'frameX') {
+                        $('span#valX').text($(this).val())
+                    }
+                    if ($(this).attr('id') === 'frameY') {
+                        $('span#valY').text($(this).val())
+                    }
+                }).mousemove(function () {
+                    $(this).parent().find('label').find('span.val').text($(this).val());
+
+                    if ($(this).attr('id') === 'frameX') {
+                        $('span#valX').text($(this).val())
+                    }
+                    if ($(this).attr('id') === 'frameY') {
+                        $('span#valY').text($(this).val())
+                    }
+                });
                 $('select').change(function () {
                     MemGen.fontStyle = $(this).val();
-                    MemGen.drawText();
+                    MemGen.drawAll();
                 });
                 $('select option').each(function () {
                     $(this).css('font-family', $(this).attr('value'))
+                });
+                
+                $('#upload').click(function () {
+                    $('input#image-upload').click();
                 })
             }
         };
 $(document).ready(function () {
     MemGen.init();
-});
+}).keydown(function (event) {
+    if (!$('textarea').is(':focus')) {
+        event.preventDefault();
+    }
+
+    switch (event.keyCode) {
+        case 17 :
+            keys.Ctrl = true;
+            break;
+        case 46 :
+            keys.delete = true;
+            break;
+        case 73 :
+            keys.I = true;
+            break;
+        case 79 :
+            keys.O = true;
+            break;
+        case 83 :
+            keys.S = true;
+            break;
+    }
+    if (keys.delete) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    if (keys.I) {
+        if (keys.Ctrl) {
+            $("#info").toggle();
+        }
+    }
+    if (keys.O) {
+        if (keys.Ctrl) {
+            $("#image-upload").click();
+        }
+    }
+    if (keys.S) {
+        if (keys.Ctrl) {
+            MemGen.download()
+        }
+    }
+
+}).keyup(function (event) {
+    switch (event.keyCode) {
+        case 17 :
+            keys.Ctrl = false;
+            break;
+        case 46 :
+            keys.delete = false;
+            break;
+        case 73 :
+            keys.I = false;
+            break;
+        case 79 :
+            keys.O = false;
+            break;
+        case 83 :
+            keys.S = false;
+            break;
+    }
+})
