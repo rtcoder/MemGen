@@ -1,7 +1,187 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script|Gloria+Hallelujah|Indie+Flower|Roboto|Shadows+Into+Light|Ubuntu');
+
+
 html, body{
     margin:0px;
     padding:0px;
+    background: #ddd;
 }
-wrapper{
-    
+#wrapper{
+    background: #eee;
+    max-width:1200px;
+    width:100%;
+    margin: 0 auto;
 }
+#canvas-handler{
+    float:left;
+    max-width:500px;
+    width:100%;
+    text-align:left;
+}
+canvas{
+    display:inline-block;
+    border:1px solid #1b1b1b;
+    background:#fff;
+}
+#options-menu{
+    float:left;
+    width:200px;
+}
+#options-menu .input-handler{
+    width:100%;
+    float:left;
+}
+.heart{
+    color: red;
+}
+footer{
+    height:50px;
+    line-height:50px;
+    width:100%;
+    text-align:center;
+    color:#eee;
+    background:#1b1b1b;
+    position:fixed;
+    bottom:0px;
+    left:0;
+}
+footer a{
+    color:#fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*textarea styles*/
+
+textarea{
+    width:100%;
+    min-height:100px;
+    resize: vertical
+}
+
+/*input range styles*/
+
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    box-shadow: none;
+    background: #3faec7;
+    border-radius: 0px;
+    border: none;
+}
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: none;
+    border: none;
+    height: 12px;
+    width: 10px;
+    border-radius: 0px;
+    background: #48b776;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -3.6px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #3faec7;
+}
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    box-shadow: none;
+    background: #3faec7;
+    border-radius: 0px;
+    border: none;
+}
+input[type=range]::-moz-range-thumb {
+    box-shadow: none;
+    border: none;
+    height: 12px;
+    width: 10px;
+    border-radius: 0px;
+    background: #48b776;
+    cursor: pointer;
+}
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 10px 0;
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #3faec7;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+}
+input[type=range]::-ms-fill-upper {
+    background: #3faec7;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+}
+input[type=range]::-ms-thumb {
+    box-shadow: none;
+    border: none;
+    height: 12px;
+    width: 10px;
+    border-radius: 0px;
+    background: #48b776;
+    cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #3faec7;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #3faec7;
+}
+
+/*select css*/
+select {
+    padding:3px;
+    margin: 0;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    background: #3faec7;
+    color:#eee;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {padding-right:18px}
+}
+
+label {position:relative}
