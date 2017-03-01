@@ -22,6 +22,7 @@ var canvas,
             image: new Image(),
             strokeWidth: 5,
             fitToFrame: false,
+            keepRatio:true,
             init: function () {
                 canvas = document.getElementById("myCanvas");
                 ctx = canvas.getContext("2d");
@@ -107,10 +108,6 @@ var canvas,
                     saveAs(blob, "meme.png");
                 });
 
-            },
-            exportLink: function () {
-                var src = canvas.toDataURL();
-                window.open(src, '_blank');
             },
             initEvents: function () {
                 $('textarea').keyup(function () {
@@ -209,9 +206,7 @@ var canvas,
                 $('#save').click(function () {
                     MemGen.download();
                 });
-                $('#export').click(function () {
-                    MemGen.exportLink();
-                });
+                
                 $('#fitFrameToImage').click(function () {
                     MemGen.fitToImage();
                 });
@@ -258,14 +253,6 @@ $(document).ready(function () {
             keys.S = false;
             
             MemGen.download();
-        }
-    }
-    if (keys.E) {
-        if (keys.Ctrl) {
-            keys.Ctrl = false;
-            keys.E = false;
-            
-            MemGen.exportLink();
         }
     }
 }).keyup(function (event) {
