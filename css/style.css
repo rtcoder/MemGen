@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Dancing+Script|Gloria+Hallelujah|Indie+Flower|Roboto|Shadows+Into+Light|Ubuntu');
-
+*{
+    box-sizing:border-box;
+}
 
 html, body{
     margin:0px;
@@ -30,7 +32,6 @@ canvas{
     font-size:14px;
     position:fixed;
     right:0px;
-    box-sizing:border-box;
     padding:5px;
     width:300px;
     height:calc(100vh - 50px);
@@ -47,11 +48,56 @@ canvas{
 #options-menu .input-handler.w50{
     width:50%;
 }
+span.tip{
+    font-size:12px;
+    color:rgba(0,0,0,0.4);
+}
+
+input[type=color],
 input[type=file]{
     display:none;
 }
 
-button#upload,
+label[for=color],
+label[for=strokeColor]{
+    width:100%;
+    height:30px;
+    line-height:30px;
+    float:left;
+    position:relative;
+    cursor:pointer;
+    text-align:left;
+    padding:0px 2px;
+}
+
+
+label[for=color]{
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+}
+label[for=strokeColor]{
+    border-left:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+}
+
+label[for=color] span.color,
+label[for=strokeColor] span.color{
+    width:20px;
+    height:20px;
+    position:absolute;
+    right:5px;
+    top:5px;
+    border:1px solid #ccc;
+}
+
+label[for=strokeColor] span.color{
+    background:#000;
+}
+label[for=color] span.color{
+    background:#fff;
+}
+
+label#upload,
 button#save{
     background: #3faec7;
     color:#eee;
@@ -64,12 +110,14 @@ button#save{
     width: 100%;
     height:40px;
 }
-button#upload{
+label#upload{
     width: 100%;
+    float:left;
     height:30px;
+    line-height:30px;
 }
 
-button#upload:active,
+label#upload:active,
 button#save:active{
     background: #11829b;
 }
@@ -92,28 +140,13 @@ footer a{
     color:#fff;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*textarea styles*/
 
 textarea{
     width:100%;
     min-height:100px;
-    resize: vertical
+    resize: vertical;
+    font-size:15px;
 }
 
 /*input range styles*/
@@ -206,6 +239,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 /*select css*/
 select {
+    text-align:center;
     padding:3px;
     margin: 0;
     background: #3faec7;
@@ -245,4 +279,13 @@ input[type=checkbox] ~ label {
 input[type=checkbox]:checked ~ label {
     color:#fff;
     background: #3faec7;
+}
+
+input[type=checkbox]:checked ~ label .disabled,
+input[type=checkbox] ~ label .enabled{
+    display:none;
+}
+input[type=checkbox]:checked ~ label .enabled,
+input[type=checkbox] ~ label .disabled{
+    display:inline-block;
 }

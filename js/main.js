@@ -1,16 +1,15 @@
 String.prototype.lines = function () {
     return this.split(/\r*\n/);
-}
+};
 String.prototype.lineCount = function () {
     return this.lines().length;
-}
+};
 var keys = {
     Ctrl: false, //press Control (Ctrl)
     delete: false, //press delete
     O: false,
-    I: false,
     S: false
-}
+};
 var canvas,
         ctx,
         MemGen = {
@@ -27,7 +26,10 @@ var canvas,
                 ctx = canvas.getContext("2d");
                 MemGen.initEvents();
             },
-            resize: function () {
+            fitToImage: function () {
+//                if(MemGen.image.width > 0 && MemGen.image.height > 0){
+//                    
+//                }
             },
             drawText: function () {
                 ctx.strokeStyle = MemGen.strokeColor;
@@ -96,7 +98,7 @@ var canvas,
                     heightImg = this.height;
 
                     MemGen.drawAll();
-                }
+                };
             },
             download: function () {
                 canvas.toBlob(function (blob) {
@@ -104,9 +106,9 @@ var canvas,
                 });
 
             },
-            exportLink:function(){
+            exportLink: function () {
                 var src = canvas.toDataURL();
-                window.open(src,'_blank');
+                window.open(src, '_blank');
             },
             initEvents: function () {
                 $('textarea').keyup(function () {
@@ -116,6 +118,11 @@ var canvas,
                 $('input#stroke').change(function () {
                     MemGen.isStroke = $(this).is(":checked");
                     MemGen.drawAll();
+                    if (MemGen.isStroke) {
+                        $('input#lineWidth').parent().show();
+                    } else {
+                        $('input#lineWidth').parent().hide();
+                    }
                 });
                 $('input#fitToFrame').change(function () {
                     MemGen.fitToFrame = $(this).is(":checked");
@@ -149,21 +156,21 @@ var canvas,
                     MemGen.drawAll();
                 }).val(MemGen.fontSize)
                         .parent().find('label').find('span.val').text(MemGen.fontSize);
-                
-                
+
+
                 $('input#frameX').change(function () {
-                    $('canvas').attr('width', parseInt($(this).val()))
+                    $('canvas').attr('width', parseInt($(this).val()));
                     MemGen.drawAll();
                 }).mousemove(function () {
-                    $('canvas').attr('width', parseInt($(this).val()))
+                    $('canvas').attr('width', parseInt($(this).val()));
                     MemGen.drawAll();
                 });
 
                 $('input#frameY').change(function () {
-                    $('canvas').attr('height', parseInt($(this).val()))
+                    $('canvas').attr('height', parseInt($(this).val()));
                     MemGen.drawAll();
                 }).mousemove(function () {
-                    $('canvas').attr('height', parseInt($(this).val()))
+                    $('canvas').attr('height', parseInt($(this).val()));
                     MemGen.drawAll();
                 });
 
@@ -171,32 +178,35 @@ var canvas,
                     $(this).parent().find('label').find('span.val').text($(this).val());
 
                     if ($(this).attr('id') === 'frameX') {
-                        $('span#valX').text($(this).val())
+                        $('span#valX').text($(this).val());
                     }
                     if ($(this).attr('id') === 'frameY') {
-                        $('span#valY').text($(this).val())
+                        $('span#valY').text($(this).val());
                     }
                 }).mousemove(function () {
                     $(this).parent().find('label').find('span.val').text($(this).val());
 
                     if ($(this).attr('id') === 'frameX') {
-                        $('span#valX').text($(this).val())
+                        $('span#valX').text($(this).val());
                     }
                     if ($(this).attr('id') === 'frameY') {
-                        $('span#valY').text($(this).val())
+                        $('span#valY').text($(this).val());
                     }
                 });
                 $('select').change(function () {
                     MemGen.fontStyle = $(this).val();
+                    $(this).css('font-family', $(this).val());
                     MemGen.drawAll();
-                });
+                }).css('font-family', MemGen.fontStyle);
                 $('select option').each(function () {
-                    $(this).css('font-family', $(this).attr('value'))
+                    $(this).css('font-family', $(this).val());
                 });
-                
-                $('#upload').click(function () {
-                    $('input#image-upload').click();
-                })
+                $('input[type=color]').change(function () {
+                    $(this).parent().find('label').find('span.color').css('background', $(this).val());
+                });
+                $('#save').click(function () {
+                    MemGen.download();
+                });
             }
         };
 $(document).ready(function () {
@@ -213,9 +223,6 @@ $(document).ready(function () {
         case 46 :
             keys.delete = true;
             break;
-        case 73 :
-            keys.I = true;
-            break;
         case 79 :
             keys.O = true;
             break;
@@ -226,11 +233,6 @@ $(document).ready(function () {
     if (keys.delete) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
-    if (keys.I) {
-        if (keys.Ctrl) {
-            $("#info").toggle();
-        }
-    }
     if (keys.O) {
         if (keys.Ctrl) {
             $("#image-upload").click();
@@ -238,10 +240,9 @@ $(document).ready(function () {
     }
     if (keys.S) {
         if (keys.Ctrl) {
-            MemGen.download()
+            MemGen.download();
         }
     }
-
 }).keyup(function (event) {
     switch (event.keyCode) {
         case 17 :
@@ -250,9 +251,6 @@ $(document).ready(function () {
         case 46 :
             keys.delete = false;
             break;
-        case 73 :
-            keys.I = false;
-            break;
         case 79 :
             keys.O = false;
             break;
@@ -260,4 +258,4 @@ $(document).ready(function () {
             keys.S = false;
             break;
     }
-})
+});

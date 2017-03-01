@@ -16,19 +16,23 @@
         </div>
         <div id="options-menu">
             <div class="input-handler w50">
-                <label for="color">Font color</label>
                 <input type="color" id="color" value="#ffffff">
+                <label for="color">Font color<span class="color"></span</label>
             </div>
 
             <div class="input-handler w50">
-                <label for="strokeColor">Line color</label>
                 <input type="color" id="strokeColor" value="#000000">
+                <label for="strokeColor">Line color<span class="color"></span></label>
             </div>
 
             <div class="input-handler">
-
-                <button id="upload">Upload file&nbsp;<i class="fa fa-upload"></i></button>
-
+                <label for="image-upload" id="upload">
+                    <i class="fa fa-upload"></i>
+                    &nbsp;&nbsp;
+                    Upload file
+                    &nbsp;&nbsp;
+                    <span class="tip">(CTRL+O)</span>
+                </label>
                 <input type="file" id="image-upload" accept="image/*"  onchange="MemGen.upload(event)" >
             </div>
 
@@ -37,11 +41,24 @@
 
             <div class="input-handler w50">
                 <input type="checkbox" id="stroke" checked>
-                <label for="stroke">Stroke</label>
+                <label for="stroke">
+                    Stroke
+                    &nbsp;
+                    <span class="fa fa-check-circle enabled"></span>
+                    <span class="fa fa-times-circle disabled"></span>
+                </label>
             </div>
             <div class="input-handler w50">
                 <input type="checkbox" id="fitToFrame">
-                <label for="fitToFrame">Fit to frame</label>
+                <label for="fitToFrame">
+                    Fit to frame
+                    &nbsp;
+                    <span class="fa fa-check-circle enabled"></span>
+                    <span class="fa fa-times-circle disabled"></span>
+                </label>
+            </div>
+            <div class="input-handler">
+                <button id="fitFrameToImage">Fit frame to image</button>
             </div>
 
             <div class="input-handler">
@@ -49,8 +66,8 @@
                 <input type="range" min="1" max="20" step="1" id="lineWidth">
             </div>
             <div class="input-handler">
-                <label for="fontSize">Font size: <span class="val"></span></label>
-                <input type="range" min="10" max="100" step="1" id="fontSize">
+                <label for="fontSize">Font size: <span class="val"></span>px</label>
+                <input type="range" min="10" max="250" step="1" id="fontSize">
             </div>
             <div class="input-handler">
                 <label for="fontStyle">Font style</label>
@@ -68,18 +85,24 @@
                     <option value="Roboto">Roboto</option>
                 </select>
             </div>
-            <p style="margin-top:10px;float:left">Frame size: <span id="valX">400</span>&nbsp;&times;&nbsp;<span id="valY">400</span></p>
+            <p style="margin-top:10px;float:left">Frame size: <span id="valX">400</span>px&nbsp;&times;&nbsp;<span id="valY">400</span>px</p>
 
             <div class="input-handler">
-                <label for="frameX">Width: <span class="val">400</span></label>
-                <input type="range" min="1" max="1000" step="1" value="400" id="frameX">
+                <label for="frameX">Width: <span class="val">400</span>px</label>
+                <input type="range" min="1" max="2000" step="1" value="400" id="frameX">
             </div>
             <div class="input-handler">
-                <label for="frameY">Height: <span class="val">400</span></label>
-                <input type="range" min="1" max="1000" step="1" value="400" id="frameY">
+                <label for="frameY">Height: <span class="val">400</span>px</label>
+                <input type="range" min="1" max="2000" step="1" value="400" id="frameY">
             </div>
 
-            <button id="save">Save&nbsp;<i class="fa fa-download"></i></button>
+            <button id="save">
+                <i class="fa fa-download"></i>
+                &nbsp;&nbsp;
+                Save
+                &nbsp;&nbsp;
+                <span class="tip">(CTRL+S)</span>
+            </button>
         </div>
         <footer>
             Created with <span class="heart">&hearts;</span> &amp; <span class="fa fa-github"></span> by <a href="https://github.com/rtcoder/">rtCoder</a>
