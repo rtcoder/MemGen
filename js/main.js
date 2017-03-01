@@ -7,6 +7,7 @@ String.prototype.lineCount = function () {
 var keys = {
     Ctrl: false, //press Control (Ctrl)
     delete: false, //press delete
+    E: false,
     O: false,
     S: false
 };
@@ -27,9 +28,10 @@ var canvas,
                 MemGen.initEvents();
             },
             fitToImage: function () {
-//                if(MemGen.image.width > 0 && MemGen.image.height > 0){
-//                    
-//                }
+                if(MemGen.image.width > 0 && MemGen.image.height > 0){
+                    $('#frameX').val(MemGen.image.width).change();
+                    $('#frameY').val(MemGen.image.height).change();
+                }
             },
             drawText: function () {
                 ctx.strokeStyle = MemGen.strokeColor;
@@ -207,6 +209,12 @@ var canvas,
                 $('#save').click(function () {
                     MemGen.download();
                 });
+                $('#export').click(function () {
+                    MemGen.exportLink();
+                });
+                $('#fitFrameToImage').click(function () {
+                    MemGen.fitToImage();
+                });
             }
         };
 $(document).ready(function () {
@@ -223,6 +231,9 @@ $(document).ready(function () {
         case 46 :
             keys.delete = true;
             break;
+        case 69 :
+            keys.E = true;
+            break;
         case 79 :
             keys.O = true;
             break;
@@ -235,12 +246,26 @@ $(document).ready(function () {
     }
     if (keys.O) {
         if (keys.Ctrl) {
+            keys.Ctrl = false;
+            keys.O = false;
+            
             $("#image-upload").click();
         }
     }
     if (keys.S) {
         if (keys.Ctrl) {
+            keys.Ctrl = false;
+            keys.S = false;
+            
             MemGen.download();
+        }
+    }
+    if (keys.E) {
+        if (keys.Ctrl) {
+            keys.Ctrl = false;
+            keys.E = false;
+            
+            MemGen.exportLink();
         }
     }
 }).keyup(function (event) {
@@ -250,6 +275,9 @@ $(document).ready(function () {
             break;
         case 46 :
             keys.delete = false;
+            break;
+        case 69 :
+            keys.E = false;
             break;
         case 79 :
             keys.O = false;

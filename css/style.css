@@ -98,13 +98,27 @@ label[for=color] span.color{
 }
 
 label#upload,
-button#save{
-    background: #3faec7;
+button#save,
+button#export{
     color:#eee;
     border:none;
     width: 100%;
     height:40px;
     cursor: pointer;
+}
+button#fitFrameToImage{
+    color:#3f97c7;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+}
+label#upload,
+button#save{
+    background: #3faec7;
+}
+
+button#export{
+    background: #3f97c7;
 }
 button#save{
     width: 100%;
