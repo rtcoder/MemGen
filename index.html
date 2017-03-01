@@ -49,16 +49,13 @@
                 </label>
             </div>
             <div class="input-handler w50">
-                <input type="checkbox" id="fitToFrame">
-                <label for="fitToFrame">
-                    Fit to frame
+                <input type="checkbox" id="keepRatio" checked>
+                <label for="keepRatio">
+                    Keep ratio
                     &nbsp;
                     <span class="fa fa-check-circle enabled"></span>
                     <span class="fa fa-times-circle disabled"></span>
                 </label>
-            </div>
-            <div class="input-handler">
-                <button id="fitFrameToImage">Fit to image original size</button>
             </div>
 
             <div class="input-handler">
@@ -85,8 +82,6 @@
                     <option value="Roboto">Roboto</option>
                 </select>
             </div>
-            <p style="margin-top:10px;float:left">Frame size: <span id="valX">400</span>px&nbsp;&times;&nbsp;<span id="valY">400</span>px</p>
-
             <div class="input-handler">
                 <label for="frameX">Width: <span class="val">400</span>px</label>
                 <input type="range" min="1" max="2000" step="1" value="400" id="frameX">

@@ -105,12 +105,6 @@ button#save{
     height:40px;
     cursor: pointer;
 }
-button#fitFrameToImage{
-    color:#3f97c7;
-    background:transparent;
-    border:none;
-    cursor:pointer;
-}
 label#upload,
 button#save{
     background: #3faec7;

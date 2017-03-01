@@ -21,15 +21,15 @@ var canvas,
             isStroke: true,
             image: new Image(),
             strokeWidth: 5,
-            fitToFrame: false,
-            keepRatio:true,
+            keepRatio: true,
+            ratio: 0,
             init: function () {
                 canvas = document.getElementById("myCanvas");
                 ctx = canvas.getContext("2d");
                 MemGen.initEvents();
             },
             fitToImage: function () {
-                if(MemGen.image.width > 0 && MemGen.image.height > 0){
+                if (MemGen.image.width > 0 && MemGen.image.height > 0) {
                     $('#frameX').val(MemGen.image.width).change();
                     $('#frameY').val(MemGen.image.height).change();
                 }
@@ -82,11 +82,7 @@ var canvas,
 
             },
             drawImage: function () {
-                if (MemGen.fitToFrame) {
-                    ctx.drawImage(MemGen.image, 0, 0, canvas.width, canvas.height);
-                } else {
-                    ctx.drawImage(MemGen.image, 0, 0);
-                }
+                ctx.drawImage(MemGen.image, 0, 0, canvas.width, canvas.height);
             },
             upload: function (event) {
                 var input = event.target;
@@ -99,7 +95,7 @@ var canvas,
                 MemGen.image.onload = function () {
                     widthImg = this.width;
                     heightImg = this.height;
-
+                    MemGen.ratio = widthImg / heightImg;
                     MemGen.fitToImage();
                     MemGen.drawAll();
                 };
@@ -111,9 +107,7 @@ var canvas,
 
             },
             initEvents: function () {
-                $('textarea').keyup(function () {
-                    MemGen.drawAll();
-                });
+                $('textarea').keyup(MemGen.drawAll);
 
                 $('input#stroke').change(function () {
                     MemGen.isStroke = $(this).is(":checked");
@@ -124,8 +118,8 @@ var canvas,
                         $('input#lineWidth').parent().hide();
                     }
                 });
-                $('input#fitToFrame').change(function () {
-                    MemGen.fitToFrame = $(this).is(":checked");
+                $('input#keepRatio').change(function () {
+                    MemGen.keepRatio = $(this).is(":checked");
                     MemGen.drawAll();
                 });
 
@@ -160,38 +154,40 @@ var canvas,
 
                 $('input#frameX').change(function () {
                     $('canvas').attr('width', parseInt($(this).val()));
+                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                        $('canvas').attr('height', Math.floor($(this).val() / MemGen.ratio));
+                        $('#frameY').val($(this).val() / MemGen.ratio).change();
+                    }
                     MemGen.drawAll();
                 }).mousemove(function () {
                     $('canvas').attr('width', parseInt($(this).val()));
+                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                        $('canvas').attr('height', Math.floor($(this).val() / MemGen.ratio));
+                        $('#frameY').val($(this).val() / MemGen.ratio).change();
+                    }
                     MemGen.drawAll();
                 });
 
-                $('input#frameY').change(function () {
+                $('input#frameY').change(function (e) {
                     $('canvas').attr('height', parseInt($(this).val()));
+                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                        $('canvas').attr('width', Math.floor($(this).val() * MemGen.ratio));
+                        $('#frameX').val($(this).val() * MemGen.ratio).change();
+                    }
                     MemGen.drawAll();
-                }).mousemove(function () {
+                }).mousemove(function (e) {
                     $('canvas').attr('height', parseInt($(this).val()));
+                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                        $('canvas').attr('width', Math.floor($(this).val() * MemGen.ratio));
+                        $('#frameX').val($(this).val() * MemGen.ratio).change();
+                    }
                     MemGen.drawAll();
                 });
 
                 $('input[type=range]').change(function () {
                     $(this).parent().find('label').find('span.val').text($(this).val());
-
-                    if ($(this).attr('id') === 'frameX') {
-                        $('span#valX').text($(this).val());
-                    }
-                    if ($(this).attr('id') === 'frameY') {
-                        $('span#valY').text($(this).val());
-                    }
                 }).mousemove(function () {
                     $(this).parent().find('label').find('span.val').text($(this).val());
-
-                    if ($(this).attr('id') === 'frameX') {
-                        $('span#valX').text($(this).val());
-                    }
-                    if ($(this).attr('id') === 'frameY') {
-                        $('span#valY').text($(this).val());
-                    }
                 });
                 $('select').change(function () {
                     MemGen.fontStyle = $(this).val();
@@ -204,22 +200,12 @@ var canvas,
                 $('input[type=color]').change(function () {
                     $(this).parent().find('label').find('span.color').css('background', $(this).val());
                 });
-                $('#save').click(function () {
-                    MemGen.download();
-                });
-                
-                $('#fitFrameToImage').click(function () {
-                    MemGen.fitToImage();
-                });
+                $('#save').click(MemGen.download);
             }
         };
 $(document).ready(function () {
     MemGen.init();
 }).keydown(function (event) {
-    if (!$('textarea').is(':focus')) {
-        event.preventDefault();
-    }
-
     switch (event.keyCode) {
         case 17 :
             keys.Ctrl = true;
@@ -238,21 +224,24 @@ $(document).ready(function () {
             break;
     }
     if (keys.delete) {
+        event.preventDefault();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     if (keys.O) {
         if (keys.Ctrl) {
+            event.preventDefault();
             keys.Ctrl = false;
             keys.O = false;
-            
+
             $("#image-upload").click();
         }
     }
     if (keys.S) {
         if (keys.Ctrl) {
+            event.preventDefault();
             keys.Ctrl = false;
             keys.S = false;
-            
+
             MemGen.download();
         }
     }
