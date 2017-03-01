@@ -12,7 +12,7 @@ html, body{
 }
 #wrapper{
     width:calc(100vw - 300px);
-    height:calc(100vh - 50px);
+    height:calc(100vh - 30px);
     float:left; 
     overflow:auto;
 }
@@ -34,7 +34,7 @@ canvas{
     right:0px;
     padding:5px;
     width:300px;
-    height:calc(100vh - 50px);
+    height:calc(100vh - 30px);
     background:#1b1b1b;
     color:#ccc;
     overflow:auto;
@@ -140,8 +140,8 @@ button#save:active{
     color: red;
 }
 footer{
-    height:50px;
-    line-height:50px;
+    height:30px;
+    line-height:30px;
     width:100%;
     text-align:center;
     color:#eee;
@@ -149,6 +149,7 @@ footer{
     position:fixed;
     bottom:0px;
     left:0;
+    font-size:12px;
 }
 footer a{
     color:#fff;
