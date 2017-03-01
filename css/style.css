@@ -135,10 +135,6 @@ label#upload:active,
 button#save:active{
     background: #11829b;
 }
-
-.heart{
-    color: red;
-}
 footer{
     height:30px;
     line-height:30px;
