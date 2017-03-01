@@ -100,6 +100,7 @@ var canvas,
                     widthImg = this.width;
                     heightImg = this.height;
 
+                    MemGen.fitToImage();
                     MemGen.drawAll();
                 };
             },
