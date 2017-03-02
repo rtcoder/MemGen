@@ -16,11 +16,11 @@ var canvas,
         MemGen = {
             color: '#fff',
             strokeColor: '#000',
-            fontSize: 20,
+            fontSize: 30,
             fontStyle: "Tahoma",
             isStroke: true,
             image: new Image(),
-            strokeWidth: 5,
+            strokeWidth: 3,
             keepRatio: true,
             ratio: 0,
             init: function () {
@@ -88,17 +88,20 @@ var canvas,
                 var input = event.target;
                 var widthImg;
                 var heightImg;
-                MemGen.image = new Image();
 
-                MemGen.image.src = URL.createObjectURL(input.files[0]);
+                if (input.files.length > 0) {
+                    MemGen.image = new Image();
 
-                MemGen.image.onload = function () {
-                    widthImg = this.width;
-                    heightImg = this.height;
-                    MemGen.ratio = widthImg / heightImg;
-                    MemGen.fitToImage();
-                    MemGen.drawAll();
-                };
+                    MemGen.image.src = URL.createObjectURL(input.files[0]);
+
+                    MemGen.image.onload = function () {
+                        widthImg = this.width;
+                        heightImg = this.height;
+                        MemGen.ratio = widthImg / heightImg;
+                        MemGen.fitToImage();
+                        MemGen.drawAll();
+                    };
+                }
             },
             download: function () {
                 canvas.toBlob(function (blob) {
@@ -122,7 +125,7 @@ var canvas,
                     MemGen.keepRatio = $(this).is(":checked");
                     MemGen.drawAll();
                 });
-
+                
                 $('input#color').change(function () {
                     MemGen.color = $(this).val();
                     MemGen.drawAll();
