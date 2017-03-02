@@ -12,7 +12,7 @@ html, body{
 }
 #wrapper{
     width:calc(100vw - 300px);
-    height:calc(100vh - 30px);
+    height:100vh;
     float:left; 
     overflow:auto;
 }
@@ -34,7 +34,7 @@ canvas{
     right:0px;
     padding:5px;
     width:300px;
-    height:calc(100vh - 30px);
+    height:100vh;
     background:#1b1b1b;
     color:#ccc;
     overflow:auto;
@@ -43,6 +43,7 @@ canvas{
     width:100%;
     float:left;
     margin:3px 0px;
+    position: relative;
 }
 
 #options-menu .input-handler.w50{
@@ -138,7 +139,7 @@ footer{
     text-align:center;
     color:#eee;
     background:#1b1b1b;
-    position:fixed;
+    position:absolute;
     bottom:0px;
     left:0;
     font-size:12px;
@@ -272,8 +273,6 @@ input[type=checkbox] {
     position: absolute;
     top: -9999px;
     left: -9999px;
-    /* For mobile, it's typically better to position checkbox on top of clickable
-       area and turn opacity to 0 instead. */
 }
 input[type=checkbox] ~ label {
     width:100%;
