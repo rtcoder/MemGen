@@ -125,7 +125,7 @@ var canvas,
                     MemGen.keepRatio = $(this).is(":checked");
                     MemGen.drawAll();
                 });
-                
+
                 $('input#color').change(function () {
                     MemGen.color = $(this).val();
                     MemGen.drawAll();
@@ -180,7 +180,7 @@ var canvas,
                     MemGen.drawAll();
                 }).mousemove(function (e) {
                     $('canvas').attr('height', parseInt($(this).val()));
-                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                    if (MemGen.keepRatio && MemGen.ratio !== 0 && $(this).is(':focus')) {
                         $('canvas').attr('width', Math.floor($(this).val() * MemGen.ratio));
                         $('#frameX').val($(this).val() * MemGen.ratio).change();
                     }
@@ -192,13 +192,31 @@ var canvas,
                 }).mousemove(function () {
                     $(this).parent().find('label').find('span.val').text($(this).val());
                 });
-                $('select').change(function () {
-                    MemGen.fontStyle = $(this).val();
-                    $(this).css('font-family', $(this).val());
+
+                $('input#fontStyle').parent().click(function () {
+                    $('#leftPanel').toggleClass('active');
+                });
+                $('.font-select-option').click(function () {
+                    $('.font-select-option').removeClass('active');
+                    $(this).addClass('active');
+                    MemGen.fontStyle = $(this).data('value');
+                    $('input#fontStyle').val( $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').text().trim() );
                     MemGen.drawAll();
-                }).css('font-family', MemGen.fontStyle);
-                $('select option').each(function () {
-                    $(this).css('font-family', $(this).val());
+                }).each(function () {
+                    $(this).css('font-family', ''+$(this).data('value')+'');
+                });
+                $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').addClass('active');
+                $('input#fontStyle').val( $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').text().trim() );
+                $('input#fontSearch').keyup(function () {
+                    var value = $(this).val();
+                    $('.font-select-option').each(function () {
+                        if ($(this).data('value').toLowerCase().indexOf(value.toLowerCase()) !== -1
+                            || $(this).text().toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
                 });
                 $('input[type=color]').change(function () {
                     $(this).parent().find('label').find('span.color').css('background', $(this).val());
@@ -209,43 +227,45 @@ var canvas,
 $(document).ready(function () {
     MemGen.init();
 }).keydown(function (event) {
-    switch (event.keyCode) {
-        case 17 :
-            keys.Ctrl = true;
-            break;
-        case 46 :
-            keys.delete = true;
-            break;
-        case 69 :
-            keys.E = true;
-            break;
-        case 79 :
-            keys.O = true;
-            break;
-        case 83 :
-            keys.S = true;
-            break;
-    }
-    if (keys.delete) {
-        event.preventDefault();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    if (keys.O) {
-        if (keys.Ctrl) {
-            event.preventDefault();
-            keys.Ctrl = false;
-            keys.O = false;
-
-            $("#image-upload").click();
+    if (!$('input#fontSearch').is(':focus') && !$('textarea').is(':focus')) {
+        switch (event.keyCode) {
+            case 17 :
+                keys.Ctrl = true;
+                break;
+            case 46 :
+                keys.delete = true;
+                break;
+            case 69 :
+                keys.E = true;
+                break;
+            case 79 :
+                keys.O = true;
+                break;
+            case 83 :
+                keys.S = true;
+                break;
         }
-    }
-    if (keys.S) {
-        if (keys.Ctrl) {
+        if (keys.delete) {
             event.preventDefault();
-            keys.Ctrl = false;
-            keys.S = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        if (keys.O) {
+            if (keys.Ctrl) {
+                event.preventDefault();
+                keys.Ctrl = false;
+                keys.O = false;
 
-            MemGen.download();
+                $("#image-upload").click();
+            }
+        }
+        if (keys.S) {
+            if (keys.Ctrl) {
+                event.preventDefault();
+                keys.Ctrl = false;
+                keys.S = false;
+
+                MemGen.download();
+            }
         }
     }
 }).keyup(function (event) {

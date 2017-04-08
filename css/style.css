@@ -78,6 +78,7 @@ canvas{
     width:100%;
     float:left;
     margin:3px 0px;
+    position: relative;
 }
 
 #options-menu .input-handler.w50{
@@ -182,6 +183,69 @@ footer a{
     color:#fff;
 }
 
+/*left panel*/
+#leftPanel{
+    width: 300px;
+    height: calc(100vh - 30px);
+    display: none;
+    float: left;
+    background: #fff;
+}
+#leftPanel.active{
+    display: block;
+}
+#leftPanel.active + #wrapper{
+    width: calc(100vw - 600px);
+}
+/*font select*/
+#fontPicker{
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    padding: 10px;
+}
+input#fontSearch{
+    width:100%;
+    height:50px;
+    padding: 5px;
+    border: solid #d3d3d3;
+    border-width: 0px 0px 1px 0px;
+    outline: none;
+}
+input#fontSearch:focus{
+    border-color: #11829b;
+}
+ul.font-select{
+    list-style: none;
+    padding: 0px;
+    margin: 10px 0px 0px 0px;
+    width: 100%;
+    overflow: hidden;
+    height: calc(100% - 60px);
+}
+.font-select-option{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.font-select-option .icon{
+    display: inline-block;
+    opacity: 0;
+    color: #949494;
+}
+.font-select-option.active .icon{
+    opacity: 1;
+    color: #48b776;
+}
+.font-select-option:hover .icon{
+    opacity: 1;
+}
+.font-select-option:hover{
+    background: #d7e4ff;
+}
+
 /*textarea styles*/
 
 textarea{
@@ -278,7 +342,22 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
     background: #3faec7;
 }
-
+input#fontStyle{
+    
+    text-align:center;
+    padding:3px;
+    margin: 0;
+    background: transparent;
+    color:#eee;
+    border:none;
+    border-bottom: 1px solid #3faec7;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
 /*select css*/
 select {
     text-align:center;

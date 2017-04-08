@@ -10,6 +10,73 @@
         <script src="js/main.js"></script>
     </head>
     <body>
+        <div id="leftPanel">
+            <div id="fontPicker">
+                <input type="text" id="fontSearch" placeholder="Search for avalible font...">
+                <ul class="font-select">
+                    <li class="font-select-option" data-value="Arial">
+                        <span class="icon fa fa-check-circle"></span>
+                        Arial
+                    </li>
+                    <li class="font-select-option" data-value="Tahoma">
+                        <span class="icon fa fa-check-circle"></span>
+                        Tahoma
+                    </li>
+                    <li class="font-select-option" data-value="Verdana">
+                        <span class="icon fa fa-check-circle"></span>
+                        Verdana
+                    </li>
+                    <li class="font-select-option" data-value="Dancing Script">
+                        <span class="icon fa fa-check-circle"></span>
+                        Dancing Script
+                    </li>
+                    <li class="font-select-option" data-value="Shadows Into Light">
+                        <span class="icon fa fa-check-circle"></span>
+                        Shadows Into Light
+                    </li>
+                    <li class="font-select-option" data-value="Gloria Hallelujah">
+                        <span class="icon fa fa-check-circle"></span>
+                        Gloria Hallelujah
+                    </li>
+                    <li class="font-select-option" data-value="Ubuntu">
+                        <span class="icon fa fa-check-circle"></span>
+                        Ubuntu
+                    </li>
+                    <li class="font-select-option" data-value="Indie Flower">
+                        <span class="icon fa fa-check-circle"></span>
+                        Indie Flower
+                    </li>
+                    <li class="font-select-option" data-value="Roboto">
+                        <span class="icon fa fa-check-circle"></span>
+                        Roboto
+                    </li>
+                    <li class="font-select-option" data-value="Assassins Creed">
+                        <span class="icon fa fa-check-circle"></span>
+                        Assassin$ * Creed
+                    </li>
+                    <li class="font-select-option" data-value="Gta">
+                        <span class="icon fa fa-check-circle"></span>
+                        Grand Theft Auto
+                    </li>
+                    <li class="font-select-option" data-value="Resident Evil">
+                        <span class="icon fa fa-check-circle"></span>
+                        Resident Evil
+                    </li>
+                    <li class="font-select-option" data-value="Halo">
+                        <span class="icon fa fa-check-circle"></span>
+                        Halo
+                    </li>
+                    <li class="font-select-option" data-value="Call of Duty">
+                        <span class="icon fa fa-check-circle"></span>
+                        Call of Duty
+                    </li>
+                    <li class="font-select-option" data-value="TheWitcher">
+                        <span class="icon fa fa-check-circle"></span>
+                        The Witcher
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div id="wrapper">
             <div id="canvas-handler">
                 <canvas id="myCanvas" width="400" height="400"></canvas>
@@ -75,19 +142,7 @@
             </div>
             <div class="input-handler">
                 <label for="fontStyle">Font style</label>
-                <select id="fontStyle">
-                    <option value="Arial">Arial</option>
-                    <option value="Tahoma" selected>Tahoma</option>
-                    <option value="Verdana">Verdana</option>
-                    <option value="Comic Sans MS">Comic Sans MS</option>
-                    <option value="Times New Roman">Times New Roman</option>
-                    <option value="Dancing Script">Dancing Script</option>
-                    <option value="Shadows Into Light">Shadows Into Light</option>
-                    <option value="Gloria Hallelujah">Gloria Hallelujah</option>
-                    <option value="Ubuntu">Ubuntu</option>
-                    <option value="Indie Flower">Indie Flower</option>
-                    <option value="Roboto">Roboto</option>
-                </select>
+                <input id="fontStyle" type="text" disabled="disabled">
             </div>
             <div class="input-handler">
                 <label for="frameX">Width: <span class="val">400</span>px</label>
