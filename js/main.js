@@ -5,7 +5,6 @@ String.prototype.lineCount = function () {
     return this.lines().length;
 };
 var keys = {
-    Ctrl: false, //press Control (Ctrl)
     delete: false, //press delete
     E: false,
     O: false,
@@ -157,14 +156,14 @@ var canvas,
 
                 $('input#frameX').change(function () {
                     $('canvas').attr('width', parseInt($(this).val()));
-                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                    if (MemGen.keepRatio && MemGen.ratio !== 0 && $(this).is(':focus')) {
                         $('canvas').attr('height', Math.floor($(this).val() / MemGen.ratio));
                         $('#frameY').val($(this).val() / MemGen.ratio).change();
                     }
                     MemGen.drawAll();
                 }).mousemove(function () {
                     $('canvas').attr('width', parseInt($(this).val()));
-                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                    if (MemGen.keepRatio && MemGen.ratio !== 0 && $(this).is(':focus')) {
                         $('canvas').attr('height', Math.floor($(this).val() / MemGen.ratio));
                         $('#frameY').val($(this).val() / MemGen.ratio).change();
                     }
@@ -173,7 +172,7 @@ var canvas,
 
                 $('input#frameY').change(function (e) {
                     $('canvas').attr('height', parseInt($(this).val()));
-                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                    if (MemGen.keepRatio && MemGen.ratio !== 0 && $(this).is(':focus')) {
                         $('canvas').attr('width', Math.floor($(this).val() * MemGen.ratio));
                         $('#frameX').val($(this).val() * MemGen.ratio).change();
                     }
@@ -200,18 +199,18 @@ var canvas,
                     $('.font-select-option').removeClass('active');
                     $(this).addClass('active');
                     MemGen.fontStyle = $(this).data('value');
-                    $('input#fontStyle').val( $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').text().trim() );
+                    $('input#fontStyle').val($('.font-select-option[data-value="' + MemGen.fontStyle + '"]').text().trim());
                     MemGen.drawAll();
                 }).each(function () {
-                    $(this).css('font-family', ''+$(this).data('value')+'');
+                    $(this).css('font-family', '' + $(this).data('value') + '');
                 });
-                $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').addClass('active');
-                $('input#fontStyle').val( $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').text().trim() );
+                $('.font-select-option[data-value="' + MemGen.fontStyle + '"]').addClass('active');
+                $('input#fontStyle').val($('.font-select-option[data-value="' + MemGen.fontStyle + '"]').text().trim());
                 $('input#fontSearch').keyup(function () {
                     var value = $(this).val();
                     $('.font-select-option').each(function () {
                         if ($(this).data('value').toLowerCase().indexOf(value.toLowerCase()) !== -1
-                            || $(this).text().toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                                || $(this).text().toLowerCase().indexOf(value.toLowerCase()) !== -1) {
                             $(this).show();
                         } else {
                             $(this).hide();
@@ -229,9 +228,6 @@ $(document).ready(function () {
 }).keydown(function (event) {
     if (!$('input#fontSearch').is(':focus') && !$('textarea').is(':focus')) {
         switch (event.keyCode) {
-            case 17 :
-                keys.Ctrl = true;
-                break;
             case 46 :
                 keys.delete = true;
                 break;
@@ -250,18 +246,16 @@ $(document).ready(function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
         if (keys.O) {
-            if (keys.Ctrl) {
+            if (event.ctrlKey) {
                 event.preventDefault();
-                keys.Ctrl = false;
                 keys.O = false;
 
                 $("#image-upload").click();
             }
         }
         if (keys.S) {
-            if (keys.Ctrl) {
+            if (event.ctrlKey) {
                 event.preventDefault();
-                keys.Ctrl = false;
                 keys.S = false;
 
                 MemGen.download();
@@ -270,9 +264,6 @@ $(document).ready(function () {
     }
 }).keyup(function (event) {
     switch (event.keyCode) {
-        case 17 :
-            keys.Ctrl = false;
-            break;
         case 46 :
             keys.delete = false;
             break;
