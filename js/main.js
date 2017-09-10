@@ -157,14 +157,14 @@ var canvas,
 
                 $('input#frameX').change(function () {
                     $('canvas').attr('width', parseInt($(this).val()));
-                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                    if (MemGen.keepRatio && MemGen.ratio !== 0 && $(this).is(':focus')) {
                         $('canvas').attr('height', Math.floor($(this).val() / MemGen.ratio));
                         $('#frameY').val($(this).val() / MemGen.ratio).change();
                     }
                     MemGen.drawAll();
                 }).mousemove(function () {
                     $('canvas').attr('width', parseInt($(this).val()));
-                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                    if (MemGen.keepRatio && MemGen.ratio !== 0 && $(this).is(':focus')) {
                         $('canvas').attr('height', Math.floor($(this).val() / MemGen.ratio));
                         $('#frameY').val($(this).val() / MemGen.ratio).change();
                     }
@@ -173,7 +173,7 @@ var canvas,
 
                 $('input#frameY').change(function (e) {
                     $('canvas').attr('height', parseInt($(this).val()));
-                    if (MemGen.keepRatio && MemGen.ratio != 0 && $(this).is(':focus')) {
+                    if (MemGen.keepRatio && MemGen.ratio !== 0 && $(this).is(':focus')) {
                         $('canvas').attr('width', Math.floor($(this).val() * MemGen.ratio));
                         $('#frameX').val($(this).val() * MemGen.ratio).change();
                     }
@@ -200,18 +200,18 @@ var canvas,
                     $('.font-select-option').removeClass('active');
                     $(this).addClass('active');
                     MemGen.fontStyle = $(this).data('value');
-                    $('input#fontStyle').val( $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').text().trim() );
+                    $('input#fontStyle').val($('.font-select-option[data-value="' + MemGen.fontStyle + '"]').text().trim());
                     MemGen.drawAll();
                 }).each(function () {
-                    $(this).css('font-family', ''+$(this).data('value')+'');
+                    $(this).css('font-family', '' + $(this).data('value') + '');
                 });
-                $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').addClass('active');
-                $('input#fontStyle').val( $('.font-select-option[data-value="'+MemGen.fontStyle+'"]').text().trim() );
+                $('.font-select-option[data-value="' + MemGen.fontStyle + '"]').addClass('active');
+                $('input#fontStyle').val($('.font-select-option[data-value="' + MemGen.fontStyle + '"]').text().trim());
                 $('input#fontSearch').keyup(function () {
                     var value = $(this).val();
                     $('.font-select-option').each(function () {
                         if ($(this).data('value').toLowerCase().indexOf(value.toLowerCase()) !== -1
-                            || $(this).text().toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                                || $(this).text().toLowerCase().indexOf(value.toLowerCase()) !== -1) {
                             $(this).show();
                         } else {
                             $(this).hide();
