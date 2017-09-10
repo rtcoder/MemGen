@@ -5,7 +5,6 @@ String.prototype.lineCount = function () {
     return this.lines().length;
 };
 var keys = {
-    Ctrl: false, //press Control (Ctrl)
     delete: false, //press delete
     E: false,
     O: false,
@@ -229,9 +228,6 @@ $(document).ready(function () {
 }).keydown(function (event) {
     if (!$('input#fontSearch').is(':focus') && !$('textarea').is(':focus')) {
         switch (event.keyCode) {
-            case 17 :
-                keys.Ctrl = true;
-                break;
             case 46 :
                 keys.delete = true;
                 break;
@@ -250,18 +246,16 @@ $(document).ready(function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
         if (keys.O) {
-            if (keys.Ctrl) {
+            if (event.ctrlKey) {
                 event.preventDefault();
-                keys.Ctrl = false;
                 keys.O = false;
 
                 $("#image-upload").click();
             }
         }
         if (keys.S) {
-            if (keys.Ctrl) {
+            if (event.ctrlKey) {
                 event.preventDefault();
-                keys.Ctrl = false;
                 keys.S = false;
 
                 MemGen.download();
@@ -270,9 +264,6 @@ $(document).ready(function () {
     }
 }).keyup(function (event) {
     switch (event.keyCode) {
-        case 17 :
-            keys.Ctrl = false;
-            break;
         case 46 :
             keys.delete = false;
             break;
